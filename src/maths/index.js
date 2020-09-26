@@ -25,7 +25,10 @@ class Maths extends Component {
     return (
       <>
         <Header bgColor="pink" />
-        <Button btnClick={this.clickButton} type="button">click me</Button>
+        <Button
+          btnClick={this.clickButton}
+          type="submit"
+        >click me</Button>
         <button onClick={this.thichThiSao}> bam vao toi di</button>
         <Footer bgColor="violet" />
       </>

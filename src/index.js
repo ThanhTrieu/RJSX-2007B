@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './maths/index';
+import App from './sum-number/index';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

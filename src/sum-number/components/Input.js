@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 const Input = (props) => {
   return (
     <>
-      <input defaultValue={props.value} />
+      <input onChange={props.change} name={props.name} defaultValue={props.value} />
     </>
   );
 }
 Input.propTypes = {
-  value: PropTypes.number
+  name: PropTypes.string,
+  change: PropTypes.func
 }
 export default Input;

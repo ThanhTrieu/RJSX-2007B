@@ -1,16 +1,16 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
-import HeaderComponent from './Header';
-import FooterComponent from './Footer';
+import HeaderComponent from './header';
+import FooterComponent from './footer';
 
 const { Content } = Layout;
 const LayoutComponent = (props) => {
   return(
     <Layout>
       <HeaderComponent/>
-      <Content>
+      <Content style={{minHeight: '450px'}}>
         <Row>
-          <Col span={20} offset={2}>
+          <Col span={18} offset={3}>
             {props.children}
           </Col>
         </Row>
@@ -19,4 +19,4 @@ const LayoutComponent = (props) => {
     </Layout>
   );
 }
-export default LayoutComponent;
+export default React.memo(LayoutComponent);

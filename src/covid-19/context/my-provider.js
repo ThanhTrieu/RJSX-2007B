@@ -4,6 +4,7 @@ import { api } from '../api/index';
 
 class ApiProvider extends React.Component {
   constructor() {
+    super();
     this.state = {
       virus: []
     }

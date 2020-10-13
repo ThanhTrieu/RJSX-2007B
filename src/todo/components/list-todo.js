@@ -1,29 +1,41 @@
 import React from 'react';
-import { Row, Col, List, Checkbox } from 'antd';
+import PropTypes from 'prop-types';
+import { Row, Col, List, Checkbox, Typography } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
-const ListTodo = () => {
-  // du lieu mau
-  const data = [
-    {title: 'Hoc CSS'},
-    {title: 'Hoc React'}
-  ];
+const { Text } = Typography;
+
+const ListTodo = (props) => {
   return (
     <Row style={{padding: '20px', border: '1px solid #ccc', backgroundColor:'white'}}>
       <Col span={24}>
           <List
             itemLayout="horizontal"
-            dataSource={data}
+            dataSource={props.todo}
             renderItem={item => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Checkbox></Checkbox>}
-                title={item.title}
+                avatar={<Checkbox
+                  onChange={() => props.finished(item.id)}
+                  checked={item.done}
+                ></Checkbox>}
+                title={item.done ? (<Text delete mark>{item.name}</Text>) : (<Text>{item.name}</Text>)}
               />
+              <div>
+                <DeleteOutlined
+                  onClick={() => props.delete(item.id)}
+                />
+              </div>
             </List.Item>
           )}
         />
       </Col>
     </Row>
   )
+}
+ListTodo.propTypes = {
+  todo: PropTypes.array.isRequired,
+  delete: PropTypes.func.isRequired,
+  finished: PropTypes.func
 }
 export default React.memo(ListTodo);

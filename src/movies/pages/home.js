@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import slugify from 'react-slugify';
 import LayoutPage from '../components/layout';
 import {getDataMoviesHomePage} from '../services/api';
 import { Row, Col, Card, Pagination } from 'antd';
@@ -49,6 +51,7 @@ const HomePage = () => {
       <Row style={{marginTop: '5px'}}>
         {listMovies.map((item,index) => (
           <Col span={4} key={index}>
+            <Link to={`/movie/${slugify(item.title)}~${item.id}`}>
             <Card
               hoverable
               style={{ width: 200, marginRight: '5px', marginBottom: '10px' }}
@@ -56,6 +59,7 @@ const HomePage = () => {
             >
               <Meta title={item.title} />
             </Card>
+            </Link>
           </Col>
         ))}
       </Row>

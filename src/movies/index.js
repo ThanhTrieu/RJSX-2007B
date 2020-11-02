@@ -3,14 +3,14 @@ import { Skeleton } from 'antd';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 const HomeComponent = lazy(() => import('./pages/home'));
 const UpcomingComponent = lazy(() => import('./pages/up-coming'));
 const SearchComponent = lazy(() => import('./pages/search'));
 const DetailComponent = lazy(() => import('./pages/detail'));
+const LoginComponent = lazy(() => import('./pages/login'));
 
 const Movies = () => {
   return(
@@ -31,6 +31,9 @@ const Movies = () => {
           {/* localhost:3000/movie/batman~100 */}
           <Route path="/movie/:name~:id">
             <DetailComponent/>
+          </Route>
+          <Route path="/login">
+            <LoginComponent/>
           </Route>
           <Route exact path="/">
             <HomeComponent/>

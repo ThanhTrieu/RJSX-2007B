@@ -1,12 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
+import * as api from '../services/login_service';
 
 const { Header } = Layout;
 
 const HeaderComponent = () => {
+  const history = useHistory();
   const location = useLocation();
   const pathName = location.pathname;
+  const user = api.getUsername();
+
+  const logout = () => {
+    api.removeTokenLogin();
+    history.push('/login');
+  }
 
   return (
     <Header>
@@ -23,6 +32,26 @@ const HeaderComponent = () => {
         <Menu.Item key="/search">
           <NavLink to="/search">Tim kiem phim</NavLink>
         </Menu.Item>
+
+        {user === null && (
+          <Menu.Item key="/login">
+            <NavLink to="/login">Dang nhap</NavLink>
+          </Menu.Item>
+        )}
+
+        {user !== null && (
+          <Menu.Item>
+            Hi : {user}
+          </Menu.Item>
+        )}
+
+        {user !== null && (
+          <Menu.Item key="/logout">
+            <span onClick={()=>logout()}>Thoat</span>
+          </Menu.Item>
+        )}
+        
+
       </Menu>
     </Header>
   )

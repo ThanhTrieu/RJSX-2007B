@@ -3,14 +3,52 @@ import { Skeleton } from 'antd';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
+import * as api from "./services/login_service";
 
 const HomeComponent = lazy(() => import('./pages/home'));
 const UpcomingComponent = lazy(() => import('./pages/up-coming'));
 const SearchComponent = lazy(() => import('./pages/search'));
 const DetailComponent = lazy(() => import('./pages/detail'));
 const LoginComponent = lazy(() => import('./pages/login'));
+
+const PrivateRouter = ({ children, ...rest }) => {
+  const isAuthenticated = api.isLogin();
+  return (
+    <Route
+      {...rest}
+      render={({location}) => 
+        isAuthenticated ? (children) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: location }
+          }}
+        />
+      )}
+    />
+  )
+}
+
+const LoginedRouter = ({children, ...rest}) => {
+  const isLoginUser = api.isLogin();
+  return(
+    <Route
+      {...rest}
+      render={({location}) => 
+        isLoginUser ? (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: location }
+            }}
+          />) : (children)
+      }
+    />
+  )
+}
 
 const Movies = () => {
   return(
@@ -19,25 +57,25 @@ const Movies = () => {
         fallback={<Skeleton active />}
       >
         <Switch>
-          <Route path="/home">
+          <PrivateRouter path="/home">
             <HomeComponent />
-          </Route>
-          <Route path="/up-coming">
+          </PrivateRouter>
+          <PrivateRouter path="/up-coming">
             <UpcomingComponent />
-          </Route>
-          <Route path="/search">
+          </PrivateRouter>
+          <PrivateRouter path="/search">
             <SearchComponent />
-          </Route>
+          </PrivateRouter>
           {/* localhost:3000/movie/batman~100 */}
-          <Route path="/movie/:name~:id">
+          <PrivateRouter path="/movie/:name~:id">
             <DetailComponent/>
-          </Route>
-          <Route path="/login">
+          </PrivateRouter>
+          <LoginedRouter path="/login">
             <LoginComponent/>
-          </Route>
-          <Route exact path="/">
+          </LoginedRouter>
+          <PrivateRouter exact path="/">
             <HomeComponent/>
-          </Route>
+          </PrivateRouter>
         </Switch>
       </Suspense>
     </Router>

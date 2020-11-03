@@ -59,3 +59,11 @@ export const getUsername = () => {
   }
   return username;
 }
+
+export const isLogin = () => {
+  const token = getTokenLogin();
+  if(token !== null && token !== undefined && token !== ''){
+    return true;
+  }
+  return false;
+}

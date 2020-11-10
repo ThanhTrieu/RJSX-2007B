@@ -1,9 +1,10 @@
 import * as types from './types';
 
 // dinh nghia cac action
-export const searchMovie = (nameMovie) => ({
+export const searchMovie = (nameMovie, cPage = 1) => ({
   type: types.SEARCH_MOVIES,
-  nameMovie
+  nameMovie,
+  cPage
 });
 
 // dinh nghia cac action cua redux-saga

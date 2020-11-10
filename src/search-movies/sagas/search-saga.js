@@ -3,11 +3,12 @@ import * as types from '../actions/types';
 import * as actions from '../actions/index';
 import * as api from '../services/api';
 
-function* searchMovieSaga({ nameMovie }) {
+function* searchMovieSaga({ nameMovie, cPage }) {
   try {
     yield put(actions.startSearchMovie(true));
-    const data = yield call(api.searchMovieByKeyword, nameMovie);
+    const data = yield call(api.searchMovieByKeyword, nameMovie, cPage);
     if(data.results.length > 0) {
+      data.keyword = nameMovie;
       yield put(actions.searchMovieSuccess(data));
     } else {
       yield put(actions.searchMovieFail({

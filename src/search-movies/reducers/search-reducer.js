@@ -3,7 +3,8 @@ import * as types from '../actions/types';
 const initState = {
   loading: false,
   dataMovies: [],
-  error: null
+  error: null,
+  keywords: ''
 }
 
 export const searchMovieReducer = (state = initState, action) => {
@@ -13,7 +14,12 @@ export const searchMovieReducer = (state = initState, action) => {
     case types.END_SEARCH_MOVIES:
       return {...state, loading: action.loading}
     case types.SEARCH_MOVIES_SUCCESS:
-      return {...state, dataMovies: action.movies, error: null}
+      return {
+        ...state,
+        dataMovies: action.movies,
+        error: null,
+        keywords: action.movies.keyword
+      }
     case types.SEARCH_MOVIES_FAIL:
       return {...state, dataMovies: [], error: action.error}
     default:

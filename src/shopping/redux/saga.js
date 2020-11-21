@@ -1,8 +1,10 @@
 import { all, call } from 'redux-saga/effects';
 import { watchGetDataSaga } from '../pages/home/saga/product-saga';
+import cartSaga from '../pages/cart/saga/cart-saga';
 
 export default function* rootSaga() {
   yield all([
-    call(watchGetDataSaga)
+    call(watchGetDataSaga),
+    call(cartSaga)
   ])
 }

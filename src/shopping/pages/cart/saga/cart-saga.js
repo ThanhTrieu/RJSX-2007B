@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import * as types from '../actions/types';
-import * as api from '../../../services/api';
+import * as api from '../../../services/apiv2';
 
 function* addCartSaga({ id }){
   try {

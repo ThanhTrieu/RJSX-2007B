@@ -1,9 +1,15 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import * as reselect from '../pages/cart/reselect/cart-reselect';
 
 const { Header } = Layout;
 const HeaderComponent = () => {
+  const { totalItems } = useSelector(createStructuredSelector({
+    totalItems: reselect.getCountItems
+  }));
   const { pathname } = useLocation();
   return (
     <>
@@ -14,7 +20,7 @@ const HeaderComponent = () => {
             <NavLink to="/home">Home</NavLink>
           </Menu.Item>
           <Menu.Item key="/cart">
-            <NavLink to="/cart">Cart (3)</NavLink>
+            <NavLink to="/cart">Cart ({totalItems})</NavLink>
           </Menu.Item>
         </Menu>
       </Header>

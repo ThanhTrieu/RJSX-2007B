@@ -1,14 +1,18 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Row, Col, Card, Button, Skeleton } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { Row, Col, Card, Button, Skeleton, message } from 'antd';
 import * as actions from '../../cart/actions/index';
 
 const { Meta } = Card;
 const ListItems = (props) => {
   const dispatch = useDispatch();
+  const finished = useSelector(state => state.cartReducer.finished);
 
   const addCart = (id) => {
     dispatch(actions.addPdToCart(id));
+    if(finished){
+      message.success('Them san pham vao gio hang thanh cong',2);
+    }
   }
 
   if(props.loading){

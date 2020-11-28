@@ -5,14 +5,16 @@ import rootReducer from './reducer';
 import rootSaga from './saga';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { routerMiddleware } from 'connected-react-router';
+import history from './history';
 
 const configRootPersist = {
   key: 'root-persist-config',
   storage,
-  whitelist: ['cartReducer']
+  blacklist: ['router', 'productReducer']
 }
 
-const rootReducerPersist = persistReducer(configRootPersist, rootReducer);
+const rootReducerPersist = persistReducer(configRootPersist, rootReducer(history));
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -22,12 +24,13 @@ const configStore = (loadState = {}) => {
     rootReducerPersist,
     loadState,
     applyMiddleware(
+      routerMiddleware(history),
       sagaMiddleware,
       logger
     )
   )
   sagaMiddleware.run(rootSaga);
   const persistor = persistStore(store);
-  return { store, persistor }
+  return { store, persistor, history }
 }
 export default configStore;

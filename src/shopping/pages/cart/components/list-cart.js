@@ -16,6 +16,10 @@ const ListItemsCart = () => {
     dispatch(actions.deleteItemCart(id));
   }
 
+  const changeItemCart = (id, qty) => {
+    dispatch(actions.changeQtyCart(id, qty));
+  }
+
   return (
     <>
       <Row style={{ margin: '25px 0px' }}>
@@ -34,9 +38,9 @@ const ListItemsCart = () => {
           </Col>
           <Col span={20}>
             <h2> {item.name}</h2>
-            <p>Price: {item.price}</p>
-            <p>Money: {item.price * item.qty}</p>
-            <InputNumber min={1} max={10} defaultValue={item.qty} onChange="" />
+            <p>Price: { parseInt(item.price).toLocaleString()}</p>
+            <p>Money: {(item.price * item.qty).toLocaleString()}</p>
+            <InputNumber min={1} max={10} defaultValue={item.qty} onChange={ val => changeItemCart(item.id, val)} />
             <p>
               <Button
                 type="dashed"
@@ -48,7 +52,7 @@ const ListItemsCart = () => {
       )) : null}
       <Row style={{ margin: '10px 0px' }}>
         <Col span={24}>
-          <h3 style={{ textAlign:'right' }}> Tong tien: {totalMoney}</h3>
+          <h3 style={{ textAlign:'right' }}> Tong tien: {totalMoney.toLocaleString()}</h3>
         </Col>
       </Row>
     </>

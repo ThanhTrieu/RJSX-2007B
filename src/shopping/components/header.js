@@ -22,6 +22,9 @@ const HeaderComponent = () => {
           <Menu.Item key="/cart">
             <NavLink to="/cart">Cart ({totalItems})</NavLink>
           </Menu.Item>
+          <Menu.Item key="/login">
+            <NavLink to="/login">Login</NavLink>
+          </Menu.Item>
         </Menu>
       </Header>
     </>

@@ -3,16 +3,17 @@ import { Provider } from 'react-redux';
 import configStore from './redux/store';
 import { Skeleton, Spin } from 'antd';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ConnectedRouter } from 'connected-react-router';
 import {
-  BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
 
-const { store, persistor } = configStore({});
+const { store, persistor, history } = configStore({});
+
 const HomeComponent = lazy(() => import('./pages/home/index'));
 const CartComponent = lazy(() => import('./pages/cart/index'));
-
+const LoginComponent = lazy(() => import('./pages/login/index'));
 
 const ShoppingCart = () => {
   return (
@@ -21,7 +22,7 @@ const ShoppingCart = () => {
         loading={<Spin />}
         persistor={persistor}
       >
-        <Router>
+        <ConnectedRouter history={history}>
           <Suspense
             fallback={<Skeleton active />}
           >
@@ -32,12 +33,15 @@ const ShoppingCart = () => {
               <Route path="/cart">
                 <CartComponent/>
               </Route>
+              <Route path="/login">
+                <LoginComponent />
+              </Route>
               <Route exact path="/">
                 <HomeComponent/>
               </Route>
             </Switch>
           </Suspense>
-        </Router>
+        </ConnectedRouter>
       </PersistGate>
     </Provider>
   )

@@ -35,7 +35,7 @@ export const loginUser = async (user, pass) => {
 export const getTokenLogin = (token = null) => {
   const localToken = JSON.parse(localStorage['persist:token-persist']);
   const tokenStorage = localToken['token'];
-  let tk = token === null ? JSON.parse(tokenStorage) : JSON.parse(token);
+  let tk = token === null ? JSON.parse(tokenStorage) : token;
   return tk;
 }
 

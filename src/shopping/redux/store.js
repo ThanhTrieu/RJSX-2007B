@@ -11,7 +11,7 @@ import history from './history';
 const configRootPersist = {
   key: 'root-persist-config',
   storage,
-  blacklist: ['router', 'productReducer']
+  blacklist: ['router', 'productReducer', 'login']
 }
 
 const rootReducerPersist = persistReducer(configRootPersist, rootReducer(history));

@@ -12,7 +12,7 @@ const FeaturedProducts = () => {
     loading: reselect.loadingSelector,
     featured: reselect.getFeaturedSelector
   }));
-
+  
   return (
     <>
       <Row style={{margin: '12px 0px'}}>

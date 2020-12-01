@@ -72,15 +72,16 @@ export const cartReducer = (state = initState, action) => {
     case types.CHANGE_QTY_CART:
       const idChange = action.id;
       const qtyChange = action.qty;
-      // tim san pham ma nguoi dung muon thay doi so luong mua nam trong gio hang
-      // de cap nhat so luong mua moi cho dung san pham day
-      const itemChange = state.cartItems.filter(item => item.id === idChange)[0];
-      itemChange.qty = qtyChange;
+      // cap nhat lai so luong san pham trong gio hang
+      const newCarts = state.cartItems.map(item => {
+        return item.id === idChange ? {...item, qty: qtyChange }: item;
+      });
       const newTotalMoney = state.cartItems.map(item => parseInt(item.price) * item.qty).reduce((pre, next) => pre + next);
       //state.cartItems.map(item => parseInt(item.price) * item.qty) : tra ve 1 mang chua toan bo so tien cua tung san pham
       // reduce((pre, next) => pre + next) : cong don so tien nam trong mang
       return {
         ...state,
+        cartItems: newCarts,
         sumMoney: newTotalMoney,
         errorCart: null
       }

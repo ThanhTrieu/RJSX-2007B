@@ -1,5 +1,9 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button } from 'antd';
+import { Row, Col, Form, Input, Button, Spin } from 'antd';
+import * as reselect from '../reselect/login-reselect';
+import { loginRequest } from '../actions/index';
+import { createStructuredSelector } from 'reselect';
+import { useSelector, useDispatch } from 'react-redux';
 
 const layout = {
   labelCol: {
@@ -17,8 +21,14 @@ const tailLayout = {
 };
 
 const FormLogin = () => {
+  const { loading, message } = useSelector(createStructuredSelector({
+    loading: reselect.loadingLoginUser,
+    message: reselect.getMessageLogin
+  }));
+  const dispatch = useDispatch();
+
   const onFinish = (values) => {
-    console.log('Success:', values);
+    dispatch(loginRequest(values.username, values.password));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -29,6 +39,9 @@ const FormLogin = () => {
       <Row>
         <Col span={12} offset={6}>
           <h1 style={{textAlign: 'center'}}>Login</h1>
+          { message !== null ? (
+            <p style={{color: 'red', textAlign: 'center'}}> { message } </p>
+          ) : null }
         </Col>
       </Row>
       <Row>
@@ -69,9 +82,21 @@ const FormLogin = () => {
             </Form.Item>
 
             <Form.Item {...tailLayout}>
+            { loading ? (
+              <>
+                <Button disabled type="primary" htmlType="submit">
+                  Submit
+                </Button>
+                <Spin style={{ marginLeft: '12px' }} />
+              </>
+            ) : (
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
+            ) }
+
+              
+
             </Form.Item>
           </Form>
         </Col>

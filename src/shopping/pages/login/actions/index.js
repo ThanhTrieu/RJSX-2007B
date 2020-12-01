@@ -31,3 +31,8 @@ export const removeTokenLogin = (token) => ({
   type: types.REMOVE_TOKEN_LOGIN,
   token
 });
+
+export const startLogin = (loading) => ({
+  type: types.START_LOGIN,
+  loading
+});
